@@ -1,77 +1,70 @@
-roboticsgroup_upatras_gazebo_plugins
-====================================
+# roboticsgroup_upatras_gazebo_plugins
 
-Collection of small gazebo plugins
-----------------------------------
+> NOTE The plugins have been ported to ROS 2 but they are untested. Feel free to try them and open a PR if you experience any problem.
 
-MimicJointPlugin
-----------------
+## Collection of small gazebo plugins
+
+### MimicJointPlugin
 
 A simple (Model) plugin for Gazebo in order to add to Gazebo the mimic joint functionality that exists in URDF (ROS). Inspired by code of Goncalo Cabrita.
 
-  - *XML Parameters*
+- *XML Parameters*
 
-    - joint (Required)
+  - joint (Required)
 
-      A **string** specifying the name of the joint to be mimic-ed.
+    A **string** specifying the name of the joint to be mimic-ed.
 
-    - mimicJoint (Required)
+  - mimicJoint (Required)
 
-      A **string** specifying the name of the mimic joint.
+    A **string** specifying the name of the mimic joint.
 
-    - multiplier
+  - multiplier
 
-      A **double** specifying the multiplier parameter of the mimic joint. Defaults to 1.0.
+    A **double** specifying the multiplier parameter of the mimic joint. Defaults to 1.0.
 
-    - offset
+  - offset
 
-      A **double** specifying the offset parameter of the mimic joint. Defaults to 0.0.
+    A **double** specifying the offset parameter of the mimic joint. Defaults to 0.0.
 
-    - maxEffort
+  - maxEffort
 
-      A **double** specifying the max effort the mimic joint can generate. Defaults to the effort limit in the sdf model.
+    A **double** specifying the max effort the mimic joint can generate. Defaults to the effort limit in the sdf model.
 
-    - sensitiveness
+  - sensitiveness
 
-      A **double** specifying the sensitiveness of the mimic joint. Defaults to 0.0. It basically is the threshold of the difference between the 2 angles (joint's and mimic's) before applying the "mimicness".
+    A **double** specifying the sensitiveness of the mimic joint. Defaults to 0.0. It basically is the threshold of the difference between the 2 angles (joint's and mimic's) before applying the "mimicness".
 
-    - robotNamespace
+  - robotNamespace
 
-      A **string** specifying the namespace the robot is under. Defaults to "".
+    A **string** specifying the namespace the robot is under. Defaults to "".
 
-    - hasPID
+  - hasPID
 
-      Determines whether the joint has PID in order to be controlled via PID position/effort controller. *\<hasPID/\>* means that the mimic joint is controlled via PID. Omit it so that the mimic joint is controlled via setAngle. Optionally, specify a value to set the pid namespace.
+    Determines whether the joint has PID in order to be controlled via PID position/effort controller. *\<hasPID/\>* means that the mimic joint is controlled via PID. Omit it so that the mimic joint is controlled via setAngle. Optionally, specify a value to set the pid namespace.
 
-DisableLinkPlugin
------------------
+### DisableLinkPlugin
 
 A simple (Model) plugin for Gazebo that allows you to disable a link in Gazebo's physics engine.
 
-  - *XML Parameters*
+- *XML Parameters*
 
-    - link (Required)
+  - link (Required)
 
-      A **string** specifying the name of the link to be disabled. It should be a valid sdf (not urdf) link.
+    A **string** specifying the name of the link to be disabled. It should be a valid sdf (not urdf) link.
 
-### Hoping to add more plugins....
-
-Usage
-------
+## Usage
 
 Standard Gazebo plugin import inside xacro/urdf. Use **libroboticsgroup_upatras_gazebo_** prefix. E.g. if you want to import MimicJointPlugin:
 
-```
+```text
 libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so
 ```
 
-Notes
-------
+## Notes
 
 If there is a need, please make an issue and I'll see what I can do to add that functionality/plugin.
 
-License
-----
+## License
 
 BSD
 

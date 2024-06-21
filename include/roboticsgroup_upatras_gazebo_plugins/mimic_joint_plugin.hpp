@@ -20,44 +20,38 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-#ifndef ROBOTICSGROUP_UPATRAS_GAZEBO_PLUGINS_MIMIC_JOINT_PLUGIN
-#define ROBOTICSGROUP_UPATRAS_GAZEBO_PLUGINS_MIMIC_JOINT_PLUGIN
+#ifndef ROBOTICSGROUP_UPATRAS_GAZEBO_PLUGINS__MIMIC_JOINT_PLUGIN_HPP_
+#define ROBOTICSGROUP_UPATRAS_GAZEBO_PLUGINS__MIMIC_JOINT_PLUGIN_HPP_
 
-// ROS includes
-#include <ros/ros.h>
+#include <memory>
 
-// ros_control
-#include <control_toolbox/pid.h>
+#include <control_toolbox/pid_ros.hpp>
 
-// Gazebo includes
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/physics/physics.hh>
+#include <gazebo_ros/node.hpp>
 
 namespace gazebo {
 
     class MimicJointPlugin : public ModelPlugin {
       public:
         MimicJointPlugin();
-        virtual ~MimicJointPlugin() override;
-
-        virtual void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) override;
+        ~MimicJointPlugin() override;
+        void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) override;
 
       private:
         void UpdateChild();
 
+        gazebo_ros::Node::SharedPtr ros_node_;
+
         // Parameters
-        std::string joint_name_, mimic_joint_name_, robot_namespace_;
         double multiplier_, offset_, sensitiveness_, max_effort_;
-        bool has_pid_;
 
         // PID controller if needed
-        control_toolbox::Pid pid_;
+        std::unique_ptr<control_toolbox::PidROS> pid_;
 
         // Pointers to the joints
         physics::JointPtr joint_, mimic_joint_;
-
-        // Pointer to the model
-        physics::ModelPtr model_;
 
         // Pointer to the world
         physics::WorldPtr world_;
@@ -68,4 +62,4 @@ namespace gazebo {
 
 }
 
-#endif  // ROBOTICSGROUP_UPATRAS_GAZEBO_PLUGINS_MIMIC_JOINT_PLUGIN
+#endif  // ROBOTICSGROUP_UPATRAS_GAZEBO_PLUGINS__MIMIC_JOINT_PLUGIN_HPP_

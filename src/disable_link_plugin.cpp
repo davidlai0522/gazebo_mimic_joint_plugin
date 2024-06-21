@@ -20,13 +20,12 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-#include <roboticsgroup_upatras_gazebo_plugins/disable_link_plugin.h>
+#include <roboticsgroup_upatras_gazebo_plugins/disable_link_plugin.hpp>
 
 namespace gazebo {
 
     DisableLinkPlugin::DisableLinkPlugin()
     {
-        link_.reset();
     }
 
     DisableLinkPlugin::~DisableLinkPlugin()
@@ -35,26 +34,26 @@ namespace gazebo {
 
     void DisableLinkPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     {
-        model_ = _parent;
-        world_ = model_->GetWorld();
+        auto model = _parent;
+        auto world = model->GetWorld();
 
         // Check for link element
         if (!_sdf->HasElement("link")) {
-            ROS_ERROR("No link element present. DisableLinkPlugin could not be loaded.");
+            gzerr << "No link element present. DisableLinkPlugin could not be loaded\n";
             return;
         }
 
-        link_name_ = _sdf->GetElement("link")->Get<std::string>();
+        auto link_name = _sdf->GetElement("link")->Get<std::string>();
 
         // Get pointers to joints
-        link_ = model_->GetLink(link_name_);
-        if (link_) {
-            link_->SetEnabled(false);
-            // Output some confirmation
-            ROS_INFO_STREAM("DisableLinkPlugin loaded! Link: " << link_name_);
+        auto link = model->GetLink(link_name);
+        if (link) {
+            link->SetEnabled(false);
+            gzmsg << "DisableLinkPlugin loaded! Link: " << link_name << "\n";
         }
-        else
-            ROS_ERROR_STREAM("Link " << link_name_ << " not found! DisableLinkPlugin could not be loaded.");
+        else {
+            gzerr << "Link " << link_name << " not found! DisableLinkPlugin could not be loaded\n";
+        }
     }
 
     GZ_REGISTER_MODEL_PLUGIN(DisableLinkPlugin);

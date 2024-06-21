@@ -1,26 +1,10 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.5)
 project(roboticsgroup_upatras_gazebo_plugins)
 
-find_package(catkin REQUIRED
-  COMPONENTS
-    control_toolbox
-    gazebo_ros
-    roscpp
-)
-
-find_package(gazebo REQUIRED)
-
-catkin_package(
-  INCLUDE_DIRS
-    include
-  LIBRARIES
-    roboticsgroup_upatras_gazebo_mimic_joint_plugin
-    roboticsgroup_upatras_gazebo_disable_link_plugin
-  CATKIN_DEPENDS
-    control_toolbox
-    gazebo_ros
-    roscpp
-)
+find_package(ament_cmake REQUIRED)
+find_package(control_toolbox REQUIRED)
+find_package(gazebo_dev REQUIRED)
+find_package(rclcpp REQUIRED)
 
 include_directories(
   include
@@ -28,24 +12,48 @@ include_directories(
   ${GAZEBO_INCLUDE_DIRS}
 )
 
-link_directories(${GAZEBO_LIBRARY_DIRS})
+link_directories(${gazebo_dev_LIBRARY_DIRS})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
+add_library(roboticsgroup_upatras_gazebo_mimic_joint_plugin SHARED src/mimic_joint_plugin.cpp)
+target_include_directories(roboticsgroup_upatras_gazebo_mimic_joint_plugin PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>"
+)
+ament_target_dependencies(roboticsgroup_upatras_gazebo_mimic_joint_plugin control_toolbox gazebo_dev rclcpp)
 
-add_library(roboticsgroup_upatras_gazebo_mimic_joint_plugin src/mimic_joint_plugin.cpp)
-target_link_libraries(roboticsgroup_upatras_gazebo_mimic_joint_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_library(roboticsgroup_upatras_gazebo_disable_link_plugin SHARED src/disable_link_plugin.cpp)
+target_include_directories(roboticsgroup_upatras_gazebo_disable_link_plugin PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>"
+)
+ament_target_dependencies(roboticsgroup_upatras_gazebo_disable_link_plugin gazebo_dev)
 
-add_library(roboticsgroup_upatras_gazebo_disable_link_plugin src/disable_link_plugin.cpp)
-target_link_libraries(roboticsgroup_upatras_gazebo_disable_link_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+install(
+  DIRECTORY include/
+  DESTINATION include/${PROJECT_NAME}
+)
 
-install(TARGETS
+install(
+  TARGETS
     roboticsgroup_upatras_gazebo_mimic_joint_plugin
     roboticsgroup_upatras_gazebo_disable_link_plugin
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY include/${PROJECT_NAME}
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  set(ament_cmake_copyright_FOUND TRUE)
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+ament_export_libraries(
+  roboticsgroup_upatras_gazebo_mimic_joint_plugin
+  roboticsgroup_upatras_gazebo_disable_link_plugin
 )
+
+ament_package()
