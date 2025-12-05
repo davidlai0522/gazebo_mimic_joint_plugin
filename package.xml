@@ -20,7 +20,7 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVI
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
 <package format="3">
-  <name>roboticsgroup_upatras_gazebo_plugins</name>
+  <name>gazebo_mimic_joint_plugin</name>
   <version>0.2.0</version>
   <description>Collection of gazebo plugins</description>
 
@@ -29,8 +29,8 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
   <license>BSD</license>
   <author email="costashatz@gmail.com">Konstantinos Chatzilygeroudis</author>
 
-  <url type="repository">https://github.com/roboticsgroup/roboticsgroup_upatras_gazebo_plugins</url>
-  <url type="bugtracker">https://github.com/roboticsgroup/roboticsgroup_upatras_gazebo_plugins/issues</url>
+  <url type="repository">https://github.com/roboticsgroup/gazebo_mimic_joint_plugin</url>
+  <url type="bugtracker">https://github.com/roboticsgroup/gazebo_mimic_joint_plugin/issues</url>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

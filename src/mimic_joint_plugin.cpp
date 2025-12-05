@@ -22,7 +22,7 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 
 #include <rclcpp/duration.hpp>
 
-#include <roboticsgroup_upatras_gazebo_plugins/mimic_joint_plugin.hpp>
+#include <gazebo_mimic_joint_plugin/mimic_joint_plugin.hpp>
 
 namespace math = ignition::math;
 
@@ -124,11 +124,9 @@ namespace gazebo {
         update_connection_ = event::Events::ConnectWorldUpdateBegin(
             boost::bind(&MimicJointPlugin::UpdateChild, this));
 
-        RCLCPP_ERROR_STREAM(
+        RCLCPP_INFO_STREAM(
             ros_node_->get_logger(),
-            "MimicJointPlugin loaded! Joint: \"" << joint_name << "\", Mimic joint: \"" << mimic_joint_name << "\""
-                                                               << ", Multiplier: " << multiplier_ << ", Offset: " << offset_
-                                                               << ", MaxEffort: " << max_effort_ << ", Sensitiveness: " << sensitiveness_);
+            "gazebo_mimic_joint plugin loaded! Joint: \"" << joint_name << "\", Mimic joint: \"" << mimic_joint_name << "\"");
     }
 
     void MimicJointPlugin::UpdateChild()

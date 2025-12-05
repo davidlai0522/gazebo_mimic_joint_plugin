@@ -1,4 +1,4 @@
-# roboticsgroup_upatras_gazebo_plugins
+# gazebo_mimic_joint_plugin
 
 > NOTE The plugins have been ported to ROS 2 but they are untested. Feel free to try them and open a PR if you experience any problem.
 
@@ -57,7 +57,7 @@ A simple (Model) plugin for Gazebo that allows you to disable a link in Gazebo's
 Standard Gazebo plugin import inside xacro/urdf. Use **libroboticsgroup_upatras_gazebo_** prefix. E.g. if you want to import MimicJointPlugin:
 
 ```text
-libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so
+libgazebo_mimic_joint_plugin.so
 ```
 
 ## Notes
